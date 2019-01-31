@@ -1,0 +1,38 @@
+
+* {
+    font-size: 20px;
+    text-align: left;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    
+}
+
+.blog {
+    background-color: rgb(255, 255, 255);
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 100%;
+    border: solid 2px lightgray;
+    color: rgb(83, 87, 101) !important;
+}
+
+hr {
+    margin-right: auto;
+}
+
+
+
+.blog img {
+    max-width: 100%;
+    max-height: 100%;
+    margin: 10px 0;
+}
+
+p {
+    margin: 40px auto;
+
+}
+
+.footer {
+    margin-bottom: 0;
+}

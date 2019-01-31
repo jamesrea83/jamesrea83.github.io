@@ -1,0 +1,256 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Game of Life</title>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://fb.me/react-15.0.0.js"></script>
+    <script src="https://fb.me/react-dom-15.0.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+ <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<style>
+
+
+.outer {
+  width: 629px;
+  overflow: hidden;
+  border: solid 2px;
+  margin-left: -5px;
+  }
+
+#container {
+  width: 625px;
+  margin:auto;
+  padding-top: 50px;
+  text-align: center;
+  }
+
+.cell {
+  width:12.5px;
+  height:12.5px;
+  float:left;
+  }
+
+
+
+.true {
+  background-color: lightgreen;
+  }
+
+.well {
+  overflow: hidden;
+  clear:both;
+  line-height: 100%;
+  display: inline-block;
+  margin: 10px auto;
+  }
+
+.genPanel {
+  border: solid 1px;
+  float: right;
+  height: 3em;
+  width: 3em;
+  }
+
+.btn {
+  font-size: 2em;
+  line-height: 100%;
+  margin-right: 5px;
+  vertical-align:middle;
+  }
+
+.btn:last-of-type {
+  margin-right:0;
+  font-size: 2.4em;
+  }
+
+
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script type="text/babel">
+
+
+var CellBuilder = function(x, y) {
+	this.x = x;
+  this.y= y;
+  this.alive = false;
+  this.neighbours = 0
+}
+
+
+CellBuilder.prototype.proximityCheck = function(grid) {
+	var counter = 0;
+	var testCell;
+	var testArr = [];
+  
+  for (var i = -1; i < 2; i ++) {
+		for (var j = -1; j < 2; j++) {
+      if (i == 0 && j == 0) {} else {
+        if (this.x + i < 0 || this.x + i > grid.length - 1 || this.y + j < 0 || this.y + j > grid.length - 1) {
+
+        } else {
+          testArr.push(grid[this.x + i][this.y + j])
+        }
+
+       }
+  	}
+	 }
+  testArr.forEach(function(elem) {
+  	if (elem.alive) counter++
+  })
+	return counter;
+}
+
+
+var arr = []
+
+    for (var i = 0; i < 50; i++) {
+        arr.push([])
+        for (var j = 0; j < 50; j++) {
+          arr[i].push(new CellBuilder(i, j))
+        }
+    }
+
+
+
+var GridBuilder = React.createClass({
+	getInitialState: function() {
+  	return {
+    	grid: this.props.grid,
+      running: false,
+      generation: 0
+    }
+  },
+	componentDidMount: function() {
+  	this.random();
+  },
+  builder: function(cellClick) {	
+    return this.state.grid.map(function(elem, x) {
+    	return elem.map(function(elem2, y) {
+      	return <Cell contents={elem2} cellClick={cellClick}/>
+      })
+    })
+  },
+  cellClick: function(targ) {
+  	console.log(targ.proximityCheck(this.state.grid))
+  	var stateCopy = this.state;
+    stateCopy.grid[targ.x][targ.y].alive = !stateCopy.grid[targ.x][targ.y].alive;
+    this.setState(stateCopy);
+  },
+  turnCycle: function() {
+  	var counter = 0;
+  	var grid = this.state.grid;
+ 		var stateCopy = this.state;
+    stateCopy.generation++;
+    
+    this.state.grid.forEach(function(elem) {
+    	elem.forEach(function(elem2) {
+				elem2.neighbours = elem2.proximityCheck(grid)
+      })
+    }) 
+     stateCopy.grid.forEach(function(elem) {
+          elem.forEach(function(elem2) {
+            if (elem2.alive === true && elem2.neighbours < 2) {
+            	elem2.alive = false;
+            }
+            if (elem2.alive === true && elem2.neighbours > 3) {
+            	elem2.alive = false;
+            }
+            if (elem2.alive === false && elem2.neighbours == 3) {
+            	elem2.alive = true;
+            }
+            
+          })
+        })
+ 		this.setState(stateCopy)
+  },
+  playCycle: function() {
+  	if (this.state.running) {
+    	clearInterval(this.state.timer);
+      this.setState({ running: false})
+    } else {
+        var self = this;
+        var timer = setInterval(self.turnCycle, 500);
+        this.setState({
+          timer: timer,
+          running: true
+        })
+      }
+  },
+  random: function() {
+  	clearInterval(this.state.timer);
+  	var stateCopy = this.state;
+    stateCopy.generation = 0;
+    stateCopy.running = false;
+    stateCopy.grid.forEach(function(elem) {
+    	elem.forEach(function(elem2) {
+      	if (Math.round(Math.random()) === 0) {
+        	elem2.alive = false;
+        } else {
+        	elem2.alive = true;
+        }
+      })
+    })
+    this.setState(stateCopy);
+  },
+  clear: function() {
+  	clearInterval(this.state.timer);
+		var stateCopy = this.state;
+    stateCopy.generation = 0;
+    stateCopy.running = false;
+    stateCopy.grid.forEach(function(elem) {
+    	elem.forEach(function(elem2) {
+      	elem2.alive = false;
+      })
+    })
+    this.setState(stateCopy)
+  },
+	render: function() {
+  	return	<div>
+    				<div className="well">
+              <div className={this.state.running ? "btn btn-danger" : "btn btn-success"} onClick={this.playCycle}><span className={this.state.running ? "glyphicon glyphicon-pause" : "glyphicon glyphicon-play"}></span></div>
+              <div className="btn btn-primary" onClick={this.random}><span className="glyphicon glyphicon-random"></span></div>
+              <div className="btn btn-warning" onClick={this.clear}><span className="glyphicon glyphicon-remove-circle"></span></div>
+              <div className="btn btn-default">{this.state.generation}</div>
+              </div>
+              <div className="outer">
+                <div>
+                  {this.builder(this.cellClick)}
+                </div>
+              </div>  
+            </div>
+  }
+})
+
+var Cell = React.createClass({
+	render: function() {
+  	return	<div 	className={"cell " + this.props.contents.alive}
+    							onClick={this.props.cellClick.bind(null, this.props.contents)}
+                  >
+    				</div>
+  }
+})
+
+
+ReactDOM.render(
+	<GridBuilder grid={arr}/>, document.getElementById("container")
+)
+
+
+
+
+
+    </script>
+  </body>
+</html>
+
+
+
+
+
+
+
+

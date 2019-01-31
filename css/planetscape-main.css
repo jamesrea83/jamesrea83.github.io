@@ -1,0 +1,210 @@
+
+.planetscape-display-area {
+  margin: auto;
+  position: relative;
+  overflow: hidden;
+  opacity: 0.7;
+}
+
+.sky {
+  border: solid 1px;
+  border-radius: 100%;
+  position: absolute;
+  overflow: hidden;
+  background-color: #001848;
+  transform: rotate(160deg);
+}
+
+.sun {
+  position: absolute;
+  border-radius: 100%;
+  background-color: yellow;
+  border: solid 10px lightblue;
+  border-style: dashed;
+}
+
+
+.cloud {
+  position: absolute;
+  z-index: 3;
+}
+
+.cloud-base {
+  border-radius: 90px;
+  position: absolute;
+  background-color: lightgray;
+}
+
+.cloud-top {
+  position: absolute;
+  border-radius: 100%;
+  background-color: lightgray;
+}
+
+
+
+.cloud-1 {
+  transform: rotate(-75deg);
+  -webkit-transform: rotate(-75deg);
+  -ms-transform: rotate(-75deg);
+}
+
+.cloud-2 {
+  transform: rotate(-130deg);
+  -webkit-transform: rotate(-130deg);
+  -ms-transform: rotate(-130deg);
+}
+
+.cloud-3 {
+  transform: rotate(55deg);
+  -webkit-transform: rotate(55deg);
+  -ms-transform: rotate(55deg);
+}
+
+.cloud-4 {
+  transform: rotate(100deg);
+  -webkit-transform: rotate(100deg);
+  -ms-transform: rotate(100deg);
+}
+
+
+.moon {
+  position: absolute;
+  left: 45%;
+  top: 10%;
+  height: 100px;
+  width: 100px;
+  border-radius: 100%;
+  background-color: lightgray;
+  z-index: 3;
+}
+
+.crater {
+  position: absolute;
+  border-radius: 100%;
+}
+
+.crater-1 {
+  height: 10px;
+  width: 10px;
+  left: 15px;
+  top: 20px;
+  box-shadow: 2px 2px 10px gray;
+}
+
+.crater-1-inner {
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+  box-shadow: inset 5px 5px 10px gray;
+}
+
+.crater-2 {
+  height: 20px;
+  width: 22px;
+  left: 25px;
+  top: 60px;
+  box-shadow: inset 5px 5px 10px gray;
+  box-shadow: 5px 5px 10px gray;
+}
+
+.crater-2-inner {
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+  box-shadow: inset 5px 5px 10px gray;
+}
+
+.crater-3 {
+  height: 30px;
+  width: 30px;
+  left: 50px;
+  top: 30px;
+  box-shadow: 7px 7px 10px gray;
+}
+
+.crater-3-inner {
+  height: 100%;
+  width: 100%;
+  border-radius: 100%;
+  box-shadow: inset 5px 5px 10px gray;
+}
+
+
+
+.star {
+  position: absolute;
+  z-index: -1;
+  color: white;
+  font-size: 10px;
+}
+
+
+.planet {
+  border-radius: 100%;
+  position: absolute;
+  z-index: 2;
+  background-color: #7fa7e8;
+  border: solid 1px lightgray;
+}
+
+.land {
+  background-color: #70c66f;
+  position: absolute;
+}
+
+.land-1 {
+  border-radius: 90% 50% 50% 60%;
+  transform: rotate(35deg);
+  -webkit-transform: rotate(35deg);
+  -ms-transform: rotate(35deg);
+}
+
+.land-2 {
+  border-radius: 90% 50% 50% 60%;
+  transform: rotate(-35deg);
+  -webkit-transform: rotate(-35deg);
+  -ms-transform: rotate(-35deg);
+}
+
+.land-3 {
+  border-radius: 90% 50% 50% 60%;
+  transform: rotate(-35deg);
+  -webkit-transform: rotate(-35deg);
+  -ms-transform: rotate(-35deg);
+}
+
+
+
+/***Animations***/
+
+.spin {
+  animation: spin 60s linear infinite;
+}
+
+.sun-transition {
+  animation: sun-transition 60s linear infinite;
+}
+
+@keyframes spin {
+  50% {
+    background-color: #87CEFA;
+  }
+  100% {
+    transform: rotate(540deg);
+    -webkit-transform: rotate(540deg);
+  -ms-transform: rotate(540deg);
+    background-color: #001848;
+  }
+}
+
+
+@keyframes sun-transition {
+  60% {
+    border-color: #87CEFA;
+  }
+  100% {
+    border-color: #001848;
+  }
+}
+

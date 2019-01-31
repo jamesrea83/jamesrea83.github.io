@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Pomodoro Timer</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/devicons/1.8.0/css/devicons.min.css">
+	<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700|Cardo:400,400italic,700" rel="stylesheet"/>
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var workTime = 0;
+			var restTime = 0;
+			var runTest = false;
+			var timer;
+
+
+			$("#workPlus").click(function() {
+				var temp = $("#workMinutes").text()
+				$("#workMinutes").html(Number(temp) + 1);
+			})
+
+			$("#workMinus").click(function() {
+				var temp = $("#workMinutes").text()
+				if (Number(temp) - 1 < 1) {
+					$("#workMinutes").html(1);
+				} else {
+					$("#workMinutes").html(Number(temp) - 1);
+				}
+			})
+
+			$("#restPlus").click(function() {
+				var temp = $("#restMinutes").text()
+				$("#restMinutes").html(Number(temp) + 1);
+			})
+
+			$("#restMinus").click(function() {
+				var temp = $("#restMinutes").text()
+				if (Number(temp) - 1 < 1) {
+					$("#restMinutes").html(1);
+				} else {
+					$("#restMinutes").html(Number(temp) - 1);
+				}
+			})
+
+
+			$("#startStop").click(function() {
+				if (runTest) {
+					clearInterval(timer);
+					runTest = false;
+					$("#clockDisplay").html("00:00");
+					$(".filler").css("height", "100%");
+					$("#startStop").removeClass("glyphicon-stop").addClass("glyphicon-play");
+					return;
+				};
+				runTest = true;
+				$("#startStop").removeClass("glyphicon-play").addClass("glyphicon-stop");
+				workTime = $("#workMinutes").text();
+				restTime = $("#restMinutes").text();
+				var workSecs = (Number(workTime * 60));
+				var restSecs = (Number(restTime * 60));
+				if (workSecs > 0) {
+					startTimer(workSecs, true, restSecs);
+				};
+			})
+
+
+			function startTimer(secs, test, restSecs) {
+				var secsStart = secs;
+				var timerPercent;
+				if (test) {  
+					$(".circle").css("background-color", "orange");      
+				} else {
+					$(".circle").css("background-color", "green");     
+				}
+				timer = setInterval(function() {  
+					$("#clockDisplay").html("0" + (Math.floor(secs / 60).toPrecision(1)).slice(-2) + ":" + ("0" + secs % 60).slice(-2));
+					timerPercent = (secs / secsStart * 100);
+					$(".filler").css("height", timerPercent + "%");
+					if (secs == 0) {
+						$("#clockDisplay").html("00:00")
+						if (test) {
+							startTimer(restSecs, false, 0);
+						} else {
+							$(".filler").css("height", "100%");
+							$("#startStop").removeClass("glyphicon-stop").addClass("glyphicon-play");
+							runTest = false;
+						}
+						clearInterval(); 
+					}
+					secs--;
+				}, 1000);
+			};
+
+
+		});
+	</script>
+
+	<style type="text/css">
+
+	#home:hover {
+      background-color:#ff5722;
+      border-radius:5%;
+    }
+		* {
+			font-family:"Orbitron";
+		}
+
+		body {
+			text-align:center;
+		}
+
+		#controlRow {
+			height:150px;
+		}
+
+		.col-sm-4 {
+			height:100%;
+			display:table;
+			table-layout:fixed;
+		}
+
+		.colContainer {
+			display:table-cell;
+			vertical-align:middle;
+			text-align:center;
+		}
+
+		.btn-md {
+			width:40px;
+			height:40px;
+			border-radius:40px;
+			margin:10px;
+		}
+
+		.btn-lg {
+			height:60px;
+			width:60px;
+			border-radius:50px;
+		}
+
+		.circle {
+			text-align:center;
+			height: 400px;
+			width: 400px;
+			border-radius:400px;
+			background-color:orange;
+			overflow:hidden;
+			position:relative;
+			margin: 20px auto;
+		}
+
+		.filler {
+			width:100%;
+			height:100%;
+			background-color:white;
+
+		}
+
+		.inner {
+			height: 380px;
+			width:380px;
+			border-radius:380px;
+			background-color:white;
+			position:absolute;
+			left:50%;
+			top:50%;
+			margin:-190px;
+		}
+
+		#clockDisplay {
+			font-size: 80px;
+			line-height:380px;
+		}
+
+
+	</style>
+</head>
+
+<body>
+	<nav class="navbar navbar-default navbar-top navbar-custom" id="mainNav" style="background:rgb(238, 238, 238)">
+		<div class="navbar-header page-scroll">
+			<a class="navbar-brand" href="http://www.benchlamp.co.uk" id="home">home</a>
+		</div>
+	</nav>  
+	<div class="container">
+		<div class="row" id="controlRow">
+			<div class="col-sm-4">
+				<div class="colContainer">
+					<p>Work</p>
+					<button type="button" class="btn btn-default btn-md glyphicon glyphicon-plus" id="workPlus">
+					</button>
+					<span id="workMinutes">1</span>
+					<button type="button" class="btn btn-default btn-md glyphicon glyphicon-minus" id="workMinus"></button>
+				</div>
+			</div>
+
+
+			<div class="col-sm-4">
+				<div class="colContainer">
+					<button type="button" class="btn btn-default btn-lg glyphicon glyphicon-play" id="startStop"></button>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="colContainer">
+					<p>Rest</p>
+					<button type="button" class="btn btn-default btn-md glyphicon glyphicon-plus" id="restPlus">
+					</button>
+					<span id="restMinutes">1</span>
+					<button type="button" class="btn btn-default btn-md glyphicon glyphicon-minus" id="restMinus"></button>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12">
+			<div class="circle">
+				<div class="filler">
+					<div class="inner">
+						<div id="clockDisplay">    
+							00.00
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

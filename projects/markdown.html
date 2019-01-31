@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Markdown Previewer</title>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://fb.me/react-15.0.0.js"></script>
+    <script src="https://fb.me/react-dom-15.0.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+ <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.6.2/remarkable.js"></script>
+    <script>var initial = ["# Heading",
+"===========",
+"",
+"## Sub-heading",
+"-----------",
+"",
+"### Another deeper heading",
+"",
+"Paragraphs are separated",
+"by a blank line.",
+"",
+"Leave 2 spaces at the end of a line to do a",  
+"line break",
+"",
+"Text attributes *italic*, **bold**,", 
+"`monospace`, ~~strikethrough~~ .",
+"",
+"Shopping list:",
+"",
+  "* apples",
+  "* oranges",
+  "* pears",
+"",
+"Numbered list:",
+"",
+  "1. apples",
+  "2. oranges",
+  "3. pears",
+"",
+"The rain---not the reign---in",
+"Spain.",
+"",
+" *[Herman Fassett](https://freecodecamp.com/hermanfassett)*"
+].join('\r\n');</script>
+<style>
+
+
+body {
+  
+  
+  }
+
+.navbar {
+  text-align:center;
+  }
+ h3 {
+    margin: 0.5em 0;
+  }
+
+.well,
+textarea {
+  margin-top:2em;
+  min-height:10em;
+  }
+
+.form-control {
+  font-family: terminal;
+  color:#76ff03;
+  background-color:black;
+  }
+
+
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script type="text/babel">
+
+
+
+
+
+
+var Markuper = React.createClass({
+
+	getInitialState: function() {
+  	return {
+    	text: this.props.initial
+    }
+  },
+  rawMarkup: function() {
+  	var md = new Remarkable();
+    var rawMarkup = md.render(this.state.text.toString());
+    return { __html: rawMarkup };
+  },
+	handleChange: function(event) {
+  	this.setState({text: event.target.value});
+  },
+	render: function() {
+  	return (
+    	<div className="container">
+    		<div className="row">
+
+          <div className="col-md-6">
+          	<textarea rows="37" className="form-control" onChange={this.handleChange} defaultValue={this.state.text}></textarea>
+          </div>
+                  	<div className="col-md-6">
+          	<div className="well clearfix">
+           <span dangerouslySetInnerHTML={this.rawMarkup()} />
+            </div>
+          </div>
+        </div>
+    	</div>  
+    );
+  }
+});
+
+
+
+
+ReactDOM.render(
+	<Markuper initial={initial}/>,
+  document.getElementById("container")
+)
+
+
+
+
+    </script>
+  </body>
+</html>
+
+
+
+
+
+
+
+

@@ -1,0 +1,90 @@
+
+.planetscape-display-area {
+  height: 250px;
+  /*width: 1200px;*/
+  width: 100%;
+}
+.sky {
+  height: 2400px;
+  width: 2400px;
+  top: -500px;
+  left: -300px;
+}
+.sun {
+  height: 100px;
+  width: 100px;
+  top: 550px;
+  left: 500px;
+}
+
+
+.cloud-base {
+  height: 40px;
+  width: 150px;
+}
+.cloud-top {
+  height: 60px;
+  width: 60px;
+}
+.cloud-top-1 {
+  top: -10px;
+  left: 10px;
+}
+.cloud-top-2 {
+  left: 45px;
+  top: -30px;
+}
+.cloud-top-3 {
+  top: -10px;
+  left: 80px;
+}
+.cloud-1 {
+  top: 1000px;
+  left: 350px;
+}
+.cloud-2 {
+  top: 1750px;
+  left: 700px;
+}
+.cloud-3 {
+  top: 750px;
+  left: 1750px;
+}
+.cloud-4 {
+  top: 1250px;
+  left: 1900px;
+}
+
+
+.moon {
+  top: 1900px;
+  left: 1650px;
+}
+
+
+.planet {
+  height: 1200px;
+  width: 1200px;
+  top: 600px;
+  left: 600px;
+}
+
+.land-1 {
+  left: 300px;
+  top: 400px;
+  width: 400px;
+  height: 700px;
+}
+.land-2 {
+  left: 600px;
+  top: 100px;
+  width: 400px;
+  height: 700px;
+}
+.land-3 {
+  left: 300px;
+  top: 200px;
+  width: 100px;
+  height: 200px;
+}
+

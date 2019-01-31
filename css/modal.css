@@ -1,0 +1,27 @@
+.modalInnerContainer {
+	padding: 1em; border-radius: 5px; background-color: rgb(247, 249, 251);
+}
+.modal-body {
+	border-radius: 5px; border: 0px currentColor; background-color: rgb(255, 255, 255);
+}
+.modal-footer {
+	border-radius: 5px; border: 0px currentColor; background-color: rgb(255, 255, 255);
+}
+.modalThumb {
+	margin: 1em auto; border: 1px solid rgb(83, 87, 101); max-height: 300px; max-width: 300px;
+}
+.description {
+	font-size: 0.8em; margin-top: 1em;
+}
+.modal-footer {
+	border: currentColor;
+}
+.modal-footer > .skill-icons {
+	font-size: 20px; float: left;
+}
+.demo-open:hover {
+	border: 1px solid rgb(92, 184, 92); background-color: rgb(247, 249, 251);
+}
+.modal-close:hover {
+	border: 1px solid rgb(217, 83, 79); background-color: rgb(247, 249, 251);
+}

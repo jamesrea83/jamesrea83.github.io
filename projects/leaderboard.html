@@ -1,0 +1,285 @@
+﻿<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>FCC Leaderboard</title>
+    <script src="https://fb.me/react-15.1.0.js"></script>
+    <script src="https://fb.me/react-dom-15.1.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    
+    
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+    
+    <style>
+
+       body {
+  text-align: center;
+}
+
+.navbar {
+  color:white;
+  background-color: #43a047;
+  margin-bottom: 0;
+  border:0;
+  h3 {
+    margin: 0.5em 0;
+  }
+}
+
+.jumbotron {
+  max-width:50em;
+  margin:auto;
+  min-height: 20em;
+  background-image: url("https://lh3.googleusercontent.com/dniwX6xiqmYlI7b48FAJWLknel7f3hz3nJm5Ja81S2146j9T7j7x6Bd-Ae-swwtR1To-UGQ=s926-fcrop64=1,615b0000f898ffff");
+background-size: 100% 100%;
+  
+}
+
+
+#mainTable > tbody > tr > td {
+  text-align: center;
+  font-size: 1em;
+}
+
+#tabs h2 {
+  
+}
+
+#tabs > .nav-tabs {
+  font-size: 1em;
+}
+
+.nav-tabs > li >a:hover {
+  background-color: #c8e6c9;
+  color:black;
+}
+
+th > .btn-default {
+  width:100%;
+  &:hover {
+    background-color: #c8e6c9;
+  }
+  &:active {
+    background-color: #43a047;
+  }
+}
+
+.table-striped > tbody > tr:nth-child(even) > td, .table-striped > tbody > tr:nth-child(even) > th {
+   background-color: #c8e6c9;
+  color:black;
+}
+
+
+
+
+    </style>
+  </head>
+
+  <body>
+  <nav class="navbar navbar-default navbar-top navbar-custom" id="mainNav" style="background:rgb(238, 238, 238)">
+  <div class="navbar-header page-scroll">
+    <a class="navbar-brand" href="http://www.benchlamp.co.uk" id="home">home</a>
+  </div>
+</nav>  
+    <div class="container-fluid">
+<div class="jumbotron">
+
+</div>
+
+
+<div id="container">
+
+</div>
+
+</div>
+    <script type="text/babel">
+   
+
+
+//SORT FUNCTIONS
+function azSorter(array, target, type) {
+if (type) {
+    return array.sort(function(a, b) {
+      return (a[target].toLowerCase() > b[target].toLowerCase()) - (a
+      [target].toLowerCase() < b[target].toLowerCase())
+    })
+  } else {
+    return array.sort(function(b, a) {
+      return (a[target].toLowerCase() > b[target].toLowerCase()) - (a
+      [target].toLowerCase() < b[target].toLowerCase())
+    })
+  }
+}
+
+function numSorter(array, target, type) {
+if (type) {
+    return array.sort(function(a, b) {
+      return (a[target] - b[target])
+    })
+  } else {
+    return array.sort(function(b, a) {
+      return (a[target] - b[target]) 
+    })
+  }
+}
+
+
+//PARENT COMPONENT
+var UserScroll = React.createClass({
+
+  getInitialState: function() {
+    return {
+      userIDs: [],
+      nameFilter: true,
+      recentFilter: true,
+      allTimeFilter: true,
+      tabs: true,
+    }
+  }, 
+  
+  componentDidMount: function() {
+    this.request("https://fcctop100.herokuapp.com/api/fccusers/top/recent")
+  },
+  
+  
+  request: function(URL) {
+    $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: URL,
+      success: function(response) {
+        this.processResults(response);
+      }.bind(this)
+    });
+  },
+  
+  processResults: function(response) {
+      console.log(response)
+      this.setState({
+        userIDs: response
+      })
+  },
+  
+  handleUserName: function() {
+      this.setState({
+        userIDs: azSorter(this.state.userIDs, "username", this.state.nameFilter),
+        nameFilter: !this.state.nameFilter
+      })
+  },  
+  
+    handleRecent: function() {
+      this.setState({
+        userIDs: numSorter(this.state.userIDs, "recent", this.state.recentFilter),
+        recentFilter: !this.state.recentFilter
+      })
+  },
+  
+    handleAllTime: function() {
+      this.setState({
+        userIDs: numSorter(this.state.userIDs, "alltime", this.state.allTimeFilter),
+        allTimeFilter: !this.state.allTimeFilter
+      })
+   },
+   
+   handleTabs: function(tag) {
+    if (tag == "allTime") {
+      this.setState({
+        tabs: false
+      })
+      this.request("https://fcctop100.herokuapp.com/api/fccusers/top/alltime")
+    } else {
+      this.setState({
+        tabs: true
+      })
+      this.request("https://fcctop100.herokuapp.com/api/fccusers/top/recent")
+    }
+   },
+   
+  render: function() {
+      return (
+        <div id="tabs">
+          <h1>FCC Leaderboard</h1>
+        <ul className="nav nav-tabs">
+          <li className={this.state.tabs ? "active" : ""}><a data-toggle="tab" href="#" onClick={this.handleTabs.bind(null, "recent")}>Top 100- 30 Days</a></li>
+          <li className={this.state.tabs ? "" : "active"}><a data-toggle="tab" href="#" onClick={this.handleTabs.bind(null, "allTime")}>Top 100- All Time</a></li>
+        </ul>
+          
+          <table className="table table-bordered table-striped table-hover table-responsive" id="mainTable">            
+            <TableHead handleUserName={this.handleUserName}
+                       handleRecent={this.handleRecent}
+                       handleAllTime={this.handleAllTime}
+                       /> 
+            <TableBody userIDs={this.state.userIDs} />
+          </table>
+        </div>
+      )
+    }
+})
+
+
+
+var TableHead = React.createClass({
+  render: function() {
+    return (
+      <thead>
+          <tr>
+                  <th><button onClick={this.props.handleUserName}
+                  className="btn btn-default">
+                  <strong>UserName</strong>
+                  </button></th>
+                  
+                  <th><button onClick={this.props.handleRecent} 
+                  className="btn btn-default">
+                  <strong>Points- Last 30 Days</strong>
+                  </button></th>
+                  
+                  <th><button onClick={this.props.handleAllTime} 
+                  className="btn btn-default">
+                  <strong>Points- AllTime</strong>
+                  </button></th>
+        </tr>
+      </thead>   
+    )
+  }
+})
+
+
+
+var TableBody = React.createClass({
+  render: function() {
+    return (
+      <tbody id="mainBody">     
+          {this.props.userIDs.map(function(user, index) {
+                return <tr key={index}>
+                          <td>{user.username}</td>
+                          <td>{user.recent}</td>
+                          <td>{user.alltime}</td>
+                       </tr>
+             })}
+      </tbody>
+      )
+    }
+})
+
+
+
+ReactDOM.render(
+  <UserScroll />,
+  document.getElementById("container")
+)
+
+$('li > a').click(function(event){
+   event.preventDefault(); 
+});
+
+
+
+    </script>
+  </body>
+
+</html>
+               

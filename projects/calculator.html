@@ -1,0 +1,440 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Calculator</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/devicons/1.8.0/css/devicons.min.css">
+	<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700|Cardo:400,400italic,700" rel="stylesheet"/>
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var display = "";
+			var input = [];
+			var opCheck = true;
+
+//button inputs
+$(".button").click(function() {
+
+	//number inputs
+	if (isNaN(this.id) == false && opCheck == true) {
+		display += this.id;
+		input.push(Number(this.id));
+		$(".screencontent").html(display);
+	}
+	
+  // . input
+  if (this.id == "dec") {
+  	display += ".";
+  	input.push(".");
+  	$(".screencontent").html(display);
+  }
+  
+  //C input
+  if (this.id == "C") {
+  	opCheck = true;
+  	display = "";
+  	input = [];
+  	$(".screencontent").html(0);
+  }
+  
+  
+  //CE input
+  if (this.id == "CE") {
+  	opCheck = true;
+  	display = "";
+  	input = input.splice(0, input.length - 1);
+  	$(".screencontent").html(input);
+  }
+  
+  
+  //+ input
+  if (this.id == "add") {
+  	opCheck = true;
+  	display = "";
+  	input.push("+");
+  	$(".screencontent").html("+");
+  }
+  
+  //- input
+  if (this.id == "sub") {
+  	opCheck = true;
+  	display = "";
+  	input.push("-");
+  	$(".screencontent").html("-");
+  }
+  
+  //* input
+  if (this.id == "mul") {
+  	opCheck = true;
+  	display = "";
+  	input.push("*");
+  	$(".screencontent").html("*");
+  }
+  
+  
+  // / input
+  if (this.id == "div") {
+  	opCheck = true;
+  	display = "";
+  	input.push("/");
+  	$(".screencontent").html("/");
+  }
+  
+  
+  // % input
+  if (this.id == "pct") {
+  	opCheck = false;
+  	display = "";
+  	input = percentage(input);
+  	$(".screencontent").html(input);
+  }
+  
+  
+  // sqr input
+  if (this.id == "sqr") {
+  	opCheck = false;
+  	display = Math.sqrt(input.join(""));
+  	input = [];
+  	input.push(display);
+  	$(".screencontent").html(display.toPrecision(8));
+  }
+  
+  //= input
+  if (this.id == "ans") {
+  	opCheck = false;
+  	display = eval(input.join(""));
+  	$(".screencontent").html(eval(input.join("")));
+  }
+  
+  
+  function percentage(arr) {
+    //loop through array and concat all numbers not seperated by operators
+    for (var i = 0; i < arr.length; i++) {
+    	if(isNaN(arr[i - 1]) == false && isNaN(arr[i]) == false) {
+    		arr.splice(i - 1, 2, Number(("'" + arr[i - 1] + arr[i] + "'").replace(/'/g, "")))
+    		i = 0;
+    	} 
+    }
+    //calculate percentage, apply based on operator
+    var tempVal = arr[0] * arr[2] / 100;
+    return eval([arr[0], arr[1], tempVal].join(""))
+}
+
+console.log(input)
+
+});
+
+
+
+
+});
+</script>
+
+<style type="text/css">
+
+	#home:hover {
+		background-color:#ff5722;
+		border-radius:5%;
+	}
+
+	.container {
+		height: 1000px;
+		width 100%;
+	}
+
+	.inshadow {
+		-moz-box-shadow: inset 0 0 20px #000000;
+		-webkit-box-shadow: inset 0 0 20px #000000;
+		box-shadow: inset 0 0 15px #000000;
+	}
+
+	.outline {
+		border: solid 1px;
+		border-radius: 10px 10px 130px 130px / 10px 10px 30px 30px;
+		height: 410px;
+		width: 300px;
+		margin: auto;
+		margin-top: 100px;
+		background-color:#F8FCF7;
+	}
+
+	.toprow {
+		height: 30px;
+		width: 90%;
+		margin: auto;
+		margin-top: 30px;
+	}
+
+	.logo,
+	.solar {
+		width: 50%;
+		height: 100%;
+		float: left;
+		border-radius: 5px;
+	}
+
+	.logo p {
+		font-size: 8px;
+		margin: 0px;
+		padding-left: 10px;
+	}
+
+	.logo h6 {
+		margin: 5px 0px 0px 0px;
+		padding-left: 10px;
+	}
+
+	.solarpanel {
+		height: 100%;
+		width: 33.33%;
+		border: solid 1px;
+		float: left;
+		background-color:lightgray;
+	}
+
+
+
+	.solarpanel:first-of-type {
+		border-radius: 5px 0 0 5px;
+	}
+
+	.solarpanel:last-of-type {
+		border-radius: 0 5px 5px 0;
+		;
+	}
+
+	.screen {
+		height: 60px;
+		width: 90%;
+		margin: auto;
+		margin-top: 20px;
+		display:table;
+		background-color:#ebf5d0;
+	}
+
+
+	.screencontent {
+		font-size:32px;
+		text-align:right;
+		display:table-cell;
+		vertical-align:middle;
+		padding-right:10px;
+	}
+
+	.buttoncontainer {
+		margin: auto;
+		margin-top: 20px;
+		width: 90%;
+		height: 220px;
+	}
+
+	.buttonrow {
+		height: 25%;
+	}
+
+	.button {
+		height: 90%;
+		width: 18%;
+		float: left;
+		margin: 1%;
+		text-align: center;
+		display: table;
+		border-radius: 130px 130px 130px 130px / 30px 30px 30px 30px;
+		background-color:#7e94a3;
+		color:#F8FCF7;
+	}
+
+	.button > * {
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+		font-size: 22px;
+	}
+
+	.button:hover {
+		background-color:orange;
+		color:black;
+	}
+
+
+
+
+</style>
+</head>
+
+<body>
+
+	<nav class="navbar navbar-default navbar-top navbar-custom" id="mainNav" style="background:rgb(238, 238, 238)">
+		<div class="navbar-header page-scroll">
+			<a class="navbar-brand" href="http://www.benchlamp.co.uk" id="home">home</a>
+		</div>
+	</nav>  
+
+	<div class="container">
+		<div class="outline inshadow">
+
+			<div class="toprow">
+				<div class="logo">
+					<h6>
+						<strong>
+							POINTY
+						</strong>
+					</h6>
+					<p>
+						<strong>ELSI BUDDY</strong> EB-487T
+					</p>
+				</div>
+
+				<div class="solar">
+					<div class="solarpanel inshadow">
+					</div>
+					<div class="solarpanel inshadow">
+					</div>
+					<div class="solarpanel inshadow">
+					</div>
+				</div>
+
+			</div>
+
+			<div class="screen inshadow">
+				<div class="screencontent">
+					0
+				</div>
+			</div>
+
+			<div class="buttoncontainer">
+
+				<div class="buttonrow">
+					<div class="button inshadow" id="7">
+						<h5>
+							7
+						</h5>
+					</div>
+					<div class="button inshadow" id="8">
+						<h5>
+							8
+						</h5>
+					</div>
+					<div class="button inshadow" id="9">
+						<h5>
+							9
+						</h5>
+					</div>
+					<div class="button inshadow" id="CE">
+						<h5>
+							CE
+						</h5>
+					</div>
+					<div class="button inshadow" id="C">
+						<h5>
+							C
+						</h5>
+					</div>
+
+
+				</div>
+				<div class="buttonrow">
+					<div class="button inshadow" id="4">
+						<h5>
+							4
+						</h5>
+					</div>
+					<div class="button inshadow" id="5">
+						<h5>
+							5
+						</h5>
+					</div>
+					<div class="button inshadow" id="6">
+						<h5>
+							6
+						</h5>
+					</div>
+					<div class="button inshadow" id="mul">
+						<h5>
+							*
+						</h5>
+					</div>
+					<div class="button inshadow" id="div">
+						<h5>
+							/
+						</h5>
+					</div>
+				</div>
+				<div class="buttonrow">
+
+
+					<div class="button inshadow" id="1">
+						<h5>
+							1
+						</h5>
+					</div>
+					<div class="button inshadow" id="2">
+						<h5>
+							2
+						</h5>
+					</div>
+					<div class="button inshadow" id="3">
+						<h5>
+							3
+						</h5>
+					</div>
+					<div class="button inshadow" id="add">
+						<h5>
+							+
+						</h5>
+					</div>
+					<div class="button inshadow" id="sub">
+						<h5>
+							-
+						</h5>
+					</div>
+				</div>
+				<div class="buttonrow">
+					<div class="button inshadow" id="0">
+						<h5>
+							0
+						</h5>
+					</div>
+					<div class="button inshadow" id="dec">
+						<h5>
+							.
+						</h5>
+					</div>
+					<div class="button inshadow" id="pct">
+						<h5>
+							%
+						</h5>
+					</div>
+					<div class="button inshadow" id="sqr">
+						<h5>
+							&#8730
+						</h5>
+					</div>
+					<div class="button inshadow" id="ans">
+						<h5>
+							=
+						</h5>
+					</div>
+				</div>
+
+
+			</div>
+
+
+		</div>
+		
+
+	</div>
+	
+
+
+</body>
+</html>

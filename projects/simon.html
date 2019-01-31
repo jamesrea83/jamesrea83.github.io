@@ -1,0 +1,365 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Simon Game</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/devicons/1.8.0/css/devicons.min.css">
+	<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700|Cardo:400,400italic,700" rel="stylesheet"/>
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var pattern = [];
+			var colors = ["Green", "Red", "Yellow", "Blue"];
+			var pallet = {Green: {normal:"#388e3c", highlight: "#76ff03"},
+			Red: {normal:"#d32f2f", highlight: "#ff1744"},
+			Yellow: {normal: "#fbc02d", highlight:"#ffff00"},
+			Blue: {normal: "#2196f3", highlight:"#18ffff"},
+		}
+		var userPattern = [];
+		var i = 0;
+		var j = 0;
+		var turns = 1;
+		var strict = false;
+		var running = false;
+		var buttonRunning = false;
+
+
+		for (var i = 0; i < colors.length; i++) {
+			$("#panel" + colors[i]).css("background-color", pallet[colors[i]].normal)
+		}
+
+		$("#strict").click(function() {
+			if (strict == false) {
+				$("#strict").css("background-color", "#76ff03")
+				strict = true;
+			} else {
+				$("#strict").css("background-color", "lightgray")
+				strict = false;
+			}
+		})
+
+
+		function generatePattern() {
+			pattern.push(colors[Math.floor(Math.random() * 4) + 0]); 
+		}
+
+
+		$("#start").click(function() {
+			if (running == true) {
+				reset();
+			} else {
+				$("#start").css("background-color", "#f44336")
+				$("#startReset").html("Reset")
+				running = true;
+				i = 0;
+				generatePattern();  
+				displayPattern()
+				playerTurn()
+			}
+		})
+
+		function highlighter(id) {	
+			buttonRunning = true;
+			$("#panel" + id).css("background-color", pallet[id].highlight);
+			setTimeout(function() {
+				$("#panel" + id).css("background-color", pallet[id].normal);
+				buttonRunning = false;
+			}
+			, 750)
+		}
+
+
+		function displayPattern() {
+			setTimeout(function() {
+				highlighter(pattern[i]);
+				i++;
+				if (i < pattern.length) {
+					displayPattern();
+				}
+			}, 1250)
+		}
+
+		function playerTurn() {
+			var counter = 0;
+			$(".box").click(function() {
+				if (buttonRunning === false) {
+					if (this.id == ("panel" + pattern[j])) {
+						highlighter(this.id.slice(5, this.id.length))
+						j++;
+						counter++;
+						if (counter == pattern.length) {
+							counter = 0;
+							setTimeout(function() {
+								successState();
+							},500)
+						}
+					} else {
+						counter = 0;
+						failState()
+					} 
+				} 
+			}) 
+		}
+
+
+		function successState() {
+			if (turns == 20) {
+				win()
+			} else {
+				setTimeout(function() {
+					$(".hiddenCircle").html("Correct");
+					$(".hiddenCircle").css("visibility", "visible").css("color", "green");
+				}, 500)
+				setTimeout(function() {
+					$(".hiddenCircle").css("visibility", "hidden");
+					$(".turnCounter").html(turns);
+				}
+				, 2000)
+				i = 0;
+				j = 0;
+				turns++; 
+				generatePattern()
+				setTimeout(function() {
+					displayPattern()
+				},1500)
+			}
+		}
+
+
+		function failState() {
+			$(".hiddenCircle").html("Incorrect");
+			$(".hiddenCircle").css("visibility", "visible").css("color", "red");
+			setTimeout(function() {
+				$(".hiddenCircle").css("visibility", "hidden");
+			}
+			, 1000)
+			if (strict) {
+				reset();
+			} else {
+				i = 0;
+				j = 0;
+				setTimeout(function() {
+					displayPattern()
+				},1000)
+			}
+		}
+
+		function win() {
+			alert("Congratulations!");
+			reset();
+		}
+
+		function reset() {
+			running = false;
+			pattern = [];
+			userPattern = [];
+			turns = 1;
+			$("#start").css("background-color", "lightgray")
+			$("#startReset").html("Start")
+			$(".turnCounter").html(turns);
+			i = 0;
+			j = 0;
+		}
+
+
+	});
+
+</script>
+
+<style type="text/css">
+	#home:hover {
+		background-color:#ff5722;
+		border-radius:5%;
+	}
+
+	.container {
+		margin-top:50px;
+		width:500px;
+		height:500px;
+		border:solid 5px;
+		border-radius:50%;
+		overflow:hidden;
+		position:relative;
+	}
+
+
+	.box {
+		width:245px;
+		height:245px;
+		float:left;
+		background-color:lightgray;
+	}
+
+	#panelGreen {
+		border-right:solid 2.5px;
+		border-bottom:solid 2.5px;
+	}
+
+	#panelRed {
+		border-left:solid 2.5px;
+		border-bottom:solid 2.5px;
+	}
+
+	#panelYellow {
+		border-right:solid 2.5px;
+		border-top:solid 2.5px;
+	}
+
+	#panelBlue {
+		border-left:solid 2.5px;
+		border-top:solid 2.5px;
+	}
+
+
+	.innerCircle {
+		height:250px;
+		width:250px;
+		border-radius:50%;
+		border:solid 5px;
+		background-color:white;
+		position:absolute;
+		top:125px;
+		left:125px;
+		overflow:hidden;
+
+	}
+
+	.hiddenCircle {
+		height:250px;
+		width:250px;
+		border-radius:50%;
+		border:solid black 5px;
+		background-color:white;
+		position:absolute;
+		top:125px;
+		left:125px;
+		overflow:hidden;
+		visibility:hidden;
+		line-height:250px;
+		font-size:40px;
+		text-align:center;
+	}
+
+	.controlContainer {
+		height:50%;
+		margin-top:25%;
+	}
+
+	.controlBox {
+		height:100%;
+		width:50%;
+		float:left;
+		background-color:white;
+	}
+
+	#turnsBox {
+		text-align:center;
+	}
+
+	.turnCounter {
+		border:solid 5px;
+		width:40%;
+		height:40%;
+		margin-left:30%;
+		border-radius:20%;
+		line-height:40px;
+		font-size:22px;
+	}
+
+	.buttonRow {
+		height:50%;
+		position:relative;
+	}
+
+	.buttonRow > button {
+		border-radius:20%;
+		height:50%;
+		background-color:lightgray;
+		position:absolute;
+		top:25%;
+		left:5%;
+		border: solid 3px;
+	}
+
+
+	.buttonRow > h4 {
+		position:absolute;
+		top:15%;
+		left:35%;
+	}
+
+
+
+
+
+
+
+
+</style>
+</head>
+<body>
+
+
+
+		<nav class="navbar navbar-default navbar-top navbar-custom" id="mainNav" style="background:rgb(238, 238, 238)">
+			<div class="navbar-header page-scroll">
+				<a class="navbar-brand" href="http://www.benchlamp.co.uk" id="home">home</a>
+			</div>
+		</nav>  
+
+
+		<div class="container">
+
+			<div class="row">
+				<div class="box btn" id="panelGreen"></div>
+				<div class="box btn" id="panelRed"></div>
+			</div>
+
+
+
+			<div class="row">
+				<div class="box btn" id="panelYellow"></div>
+				<div class="box btn" id="panelBlue"></div>
+			</div>
+
+			<div class="innerCircle">
+				<div class="controlContainer">
+					<div class="controlBox" id="turnsBox">
+						<h4>
+							Turns
+						</h4>
+						<div class="turnCounter">
+							1
+						</div>
+					</div>
+
+					<div class="controlBox" id="buttonsBox">
+						<div class="buttonRow">
+							<button class="btn btn-default" id="start"></button>
+							<h4 id="startReset">Start</h4>
+						</div>
+						<div class="buttonRow">
+							<button class="btn btn-default" id="strict"></button>
+							<h4>Strict</h4>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+			<div class="hiddenCircle">
+			</div>
+	
+
+
+
+
+	</body>
+	</html>

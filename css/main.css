@@ -1,0 +1,450 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 22px;
+  line-height: 1.2em;
+  color: #535765;
+  text-align: center;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  /*font-family: 'Corben', Georgia, Times, serif;*/
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+}
+p,
+div {
+  /*font-family: 'Nobile', Helvetica, Arial, sans-serif;*/
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+}
+body {
+  background-color: #eaeff2;
+}
+hr {
+  height: 2px;
+  background-color: #ffffff;
+  width: 80%;
+}
+.page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+.section {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  border: solid 2px lightgray;
+}
+.navbar-default {
+  background-color: #ffffff;
+  margin-bottom: 0;
+}
+.navbar-default .navbar-brand,
+.navbar-default .nav > li > .nav-link {
+  color: #535765;
+  font-size: 18px;
+  font-weight: 300;
+}
+#toggle-button:hover,
+#toggle-button:focus {
+  background-color: #eaeff2;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  text-decoration: none;
+  color: #ff5722;
+}
+/****Header***********************/
+.splash {
+  height: 95vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.type-container {
+  width: 500px;
+  overflow: hidden;
+  margin-bottom: 5%;
+}
+.splash h1 {
+  margin: 10px 0 0 10px;
+  white-space: nowrap;
+  text-align: left;
+  overflow: hidden;
+  width: 40em;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 48px;
+  animation: type 4s linear;
+  -webkit-animation: type 4s linear;
+  -moz-animation: type 4s linear;
+}
+.splash h1 .highlight {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  font-size: 48px;
+}
+.splash h1:nth-child(2) {
+  animation: type2 6s steps(60, end);
+  -webkit-animation: type2 6s steps(60, end);
+  -moz-animation: type2 6s steps(60, end);
+}
+.splash .highlight {
+  animation: highlight 6s forwards ease-in;
+  -webkit-animation: highlight 6s forwards ease-in;
+  -moz-animation: highlight 6s forwards ease-in;
+}
+.cursor {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 42px;
+  animation: blink 0.75s infinite;
+  -webkit-animation: blink 0.75s infinite;
+  -moz-animation: blink 0.75s infinite;
+}
+.arrow {
+  opacity: 0;
+  width: 100%;
+  position: absolute;
+  bottom: 5%;
+  text-align: center;
+  font-size: 16px;
+  -moz-animation: bounce 2s infinite;
+  -webkit-animation: bounce 2s infinite;
+  animation: bounce 2s infinite, arrow-fade-in 10s forwards ease-in;
+}
+.arrow a {
+  color: #535765;
+}
+.arrow :hover {
+  text-decoration: none;
+  color: #ff5722;
+}
+.bounce {
+  -moz-animation: bounce 2s infinite;
+  -webkit-animation: bounce 2s infinite;
+  animation: bounce 2s infinite;
+}
+@keyframes arrow-fade-in {
+  to {
+    opacity: 0.7;
+  }
+}
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
+@keyframes type {
+  from {
+    width: 0;
+  }
+}
+@keyframes type2 {
+  0% {
+    width: 0;
+  }
+  30% {
+    width: 0;
+  }
+  100% {
+    width: 100;
+  }
+}
+@keyframes blink {
+  to {
+    opacity: .0;
+  }
+}
+@keyframes highlight {
+  to {
+    color: orange;
+  }
+}
+/***End Header************************/
+.menu-link-projects {
+  margin-left: auto;
+  margin-right: 10px;
+}
+.header {
+  max-height: 300px;
+  overflow: hidden;
+}
+.header img {
+  max-width: 100%;
+}
+.profile-photo-container {
+  height: 200px;
+  width: 80%;
+  margin: -100px 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.profile-photo {
+  height: 200px;
+  width: 200px;
+  border-radius: 100%;
+}
+.profile-photo img {
+  max-height: 100%;
+  max-width: 100%;
+  border-radius: 100%;
+  border: solid 20px #eaeff2;
+  -webkit-box-shadow: 0px 0px 0px 2px lightgray;
+  -moz-box-shadow: 0px 0px 0px 2px lightgray;
+  box-shadow: 0px 0px 0px 2px lightgray;
+}
+.about {
+  height: auto;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 100px 10px 0;
+  position: relative;
+}
+.border-blocker {
+  height: 20px;
+  width: 100%;
+  position: absolute;
+  top: -33px;
+  left: 0px;
+  z-index: 4;
+}
+.blocker-left {
+  background-color: #eaeff2;
+  width: 20%;
+  height: 100%;
+  display: inline-block;
+  margin-right: 0px;
+}
+.blocker-center {
+  width: 160px;
+  height: 100%;
+  display: inline-block;
+}
+.blocker-right {
+  background-color: #eaeff2;
+  width: 20%;
+  height: 100%;
+  display: inline-block;
+  margin-left: 0px;
+}
+.about > * {
+  margin: 10px 0;
+}
+.about > p {
+  font-size: 20px;
+}
+.skill-icons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+.devicons {
+  font-size: 1.5em;
+}
+.devicons:hover {
+  color: #ff5722;
+  cursor: default;
+}
+.recent {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+}
+.recent a {
+  border: solid 2px transparent;
+}
+.recent a:hover {
+  text-decoration: none;
+  border-color: #ff5722;
+}
+
+.recent-0,
+.recent-1,
+.recent-2 {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  text-align: center;
+  padding: 0 10px;
+}
+.recent-1 {
+  flex-direction: row-reverse;
+}
+.recent-content p {
+  font-size: 20px;
+}
+.recent-thumbnail {
+  height: 250px;
+  width: 250px;
+  overflow: hidden;
+}
+.recent-thumbnail img {
+  max-height: 100%;
+  max-width: 100%;
+}
+.recent-skill-icons {
+  font-size: 16px;
+  margin-top: 20px;
+}
+.project {
+  border: solid white 15px;
+  outline: 2px solid lightgray;
+  box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+  min-height: 300px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+.project-thumbnail {
+  position: relative;
+  max-height: 90%;
+  max-width: 100%;
+  overflow: hidden;
+  border: 2px solid lightgray;
+}
+.project-thumbnail:hover {
+  border-color: #ff5722;
+}
+.project-cover {
+  height: 100%;
+  width: 100%;
+  background-color: #eaeff2;
+  position: absolute;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.1s linear;
+}
+.project-cover:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+.project-thumbnail > img {
+  max-height: 100%;
+  max-width: 100%;
+}
+.project-caption {
+  height: 12%;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background-color: white;
+  font-size: 18px;
+}
+.contact {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+}
+.contact p {
+  font-size: 20px;
+}
+.btn-social-container {
+  display: flex;
+  justify-content: space-between;
+}
+.btn-social .fa {
+  font-size: 28px;
+  margin: 10px;
+}
+.btn-social .fa:hover {
+  color: #ff5722;
+}
+.footer {
+  height: 60px;
+  padding: 1em 0px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #ffffff;
+  margin-bottom: 0;
+}
+/* Mobile Styles */
+@media only screen and (min-width : 300px) and (max-width : 480px) {
+  * {
+    font-weight: 300;
+  }
+  .splash {
+    height: 85vh;
+  }
+  .splash h1 {
+    font-size: 30px;
+  }
+  .splash h1 .highlight {
+    font-size: 30px;
+  }
+  .recent-0,
+  .recent-1,
+  .recent-2 {
+    flex-direction: column;
+  }
+  .recent-content {
+    width: 100%;
+  }
+}
+/* Tablet Styles */
+@media only screen and (min-width: 481px) and (max-width: 960px) {
+  .project {
+    width: 50%;
+  }
+  .recent-0,
+  .recent-1,
+  .recent-2 {
+    flex-direction: column;
+  }
+  .recent-content {
+    width: 100%;
+  }
+}
+/* Desktop Styles */
+@media only screen and (min-width: 961px) {
+  .page {
+    width: 960px;
+    margin: 0 auto;
+  }
+  .project {
+    width: 33.3%;
+  }
+  .contact {
+    height: 200px;
+  }
+  .recent-content {
+    max-width: 70%;
+  }
+}
